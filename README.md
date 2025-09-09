@@ -2,7 +2,7 @@
 
 <div align="center">
 
-![Python](https://img.shields.io/badge/Python-3.8+-blue.svg)
+![Python](https://img.shields.io/badge/Python-3.9+-blue.svg)
 ![PyTorch](https://img.shields.io/badge/PyTorch-1.12+-red.svg)
 ![License](https://img.shields.io/badge/License-MIT-green.svg)
 
@@ -21,7 +21,7 @@ Abstract:Accurate estimation of Time of Flight Difference (TOFD) is crucial for 
 ### 🎯 Primary Method: Swin Transformer
 - **🏗️ Modern Architecture**: Hierarchical Vision Transformer with shifted windows
 - **🎨 Signal-to-Image Conversion**: Transform 1D ultrasound signals to 2D GASF images
-- **⚡ Efficient Training**: Early stopping, learning rate scheduling, mixed precision
+- **⚡ Efficient Training**: learning rate scheduling, mixed precision
 - **📈 Superior Performance**: Outperforms traditional methods in accuracy and generalization
 
 ### 🔬 Comparison Methods (5 Additional Approaches)
@@ -32,8 +32,8 @@ Abstract:Accurate estimation of Time of Flight Difference (TOFD) is crucial for 
 5. **Peak Method**: Classical peak detection approach
 
 ### 🌟 Key Features
-- **📊 Comprehensive Evaluation**: 15dB noise testing, real dataset validation
-- **🔄 Fine-tuning Capability**: Two-stage fine-tuning for improved performance
+- **📊 Comprehensive Evaluation**: *dB noise testing, real dataset validation
+- **🔄 Fine-tuning Capability**: fine-tuning for improved performance
 - **🌐 Generalization Testing**: Winston paper data validation for cross-domain performance
 - **📈 Rich Metrics**: MAE, MSE, R², MARE, inference latency analysis
 - **🔧 Flexible Configuration**: CLI flags and comprehensive config management
@@ -44,7 +44,6 @@ Abstract:Accurate estimation of Time of Flight Difference (TOFD) is crucial for 
 swin_transformer_paper/
 ├── 📄 README.md                    # Project documentation
 ├── 📄 requirements.txt             # Dependencies
-├── 📄 INSTALL.md                   # Installation guide
 │
 ├── 🎯 Primary Method (Swin Transformer)
 │   ├── swin_transformer_model.py   # Main Swin training script
@@ -59,7 +58,7 @@ swin_transformer_paper/
 ├── 🔬 Comparison Methods (5 Additional Approaches)
 │   ├── CNN Methods
 │   │   ├── CNN_pre.py              # Basic CNN model
-│   │   ├── pre_another_CNN.py      # Improved CNN
+│   │   ├── post_another_CNN.py      # Improved CNN
 │   │   ├── test_CNN.py             # CNN testing
 │   │   └── test_another_CNN.py     # Improved CNN testing
 │   │
@@ -90,14 +89,10 @@ swin_transformer_paper/
 │   └── saved_model/                # Trained models
 │
 ├── 📈 Results & Logs
-│   ├── logs/                       # Training logs and visualizations
-│   ├── training_SW_result/         # Swin training outputs
 │   ├── Fine_tuned_swin_transformer/ # Fine-tuning results
 │   └── plt_*_results/              # Method comparison visualizations
 │
 └── 🛠️ Utilities
-    ├── test_plt.py                 # Visualization utilities
-    ├── test_sw_plt.py              # Swin-specific visualization
     └── utils/tool.py               # General utilities
 ```
 
@@ -111,12 +106,9 @@ Follow this complete workflow to reproduce our results:
 ### 1. Environment Setup
 ```bash
 # Clone the repository
-git clone <repository-url>
+git clone <https://github.com/Xgblearn/Swin-TOF-Predictor.git>
 cd swin_transformer_paper
 
-# Install dependencies
-pip install -r requirements.txt
-```
 
 ### 2. Dataset Preparation
 ```bash
@@ -128,7 +120,7 @@ pip install -r requirements.txt
 ### 3. Swin Transformer Training
 ```bash
 # Train the primary Swin Transformer model
-python swin_transformer_model.py --epochs 100 --flag v100
+python swin_transformer_model.py --epochs 200 --flag v1001
 ```
 
 ### 4. 15dB Noise Testing
@@ -154,6 +146,7 @@ python nine_point_test_swim_transformer.py
 # Test generalization on Winston's paper data
 python test_Wston_data.py
 ```
+
 
 ---
 
@@ -195,7 +188,6 @@ datasets/
 │   │   ├── 0DB/             # 0dB noise level
 │   │   ├── 5DB/             # 5dB noise level
 │   │   ├── 10DB/            # 10dB noise level
-│   │   └── 15DB/            # 15dB noise level
 │   │       ├── target_ASDF/ # GASF images (.jpg)
 │   │       └── label/       # Labels (.txt)
 └── data_to_SW/               # Swin Transformer training data
@@ -256,40 +248,6 @@ python swin_transformer_model.py \
     --flag "swin_experiment_v1"
 ```
 
-#### Advanced Training Options
-
-```bash
-# Enable early stopping for better convergence
-python swin_transformer_model.py --early_stop --patience 20
-
-# Specify custom data paths
-python swin_transformer_model.py \
-    --image_dir "datasets/data_to_SW/target" \
-    --label_dir "datasets/data_to_SW/label"
-
-# Save test split for evaluation
-python swin_transformer_model.py --save_test_data
-```
-
-#### Training Parameters
-
-| Parameter | Default | Description |
-|-----------|---------|-------------|
-| `--epochs` | 100 | Number of training epochs |
-| `--batch_size` | 32 | Batch size for training |
-| `--lr` | 1e-4 | Learning rate |
-| `--early_stop` | False | Enable early stopping |
-| `--patience` | 20 | Patience for early stopping |
-| `--flag` | "v10001" | Experiment identifier |
-
-#### Training Outputs
-
-During Swin Transformer training, the following files are generated:
-- **Loss curves**: `training_SW_result/loss_curves_*.png`
-- **Training parameters**: `training_SW_result/training_params_*.json`
-- **Best model**: `saved_model/swin_best_model_*.pth`
-- **Test results**: `training_SW_result/test_results_*.json`
-
 ### Comparison Methods Training
 
 For comprehensive evaluation, we also provide training scripts for 5 additional methods:
@@ -297,11 +255,12 @@ For comprehensive evaluation, we also provide training scripts for 5 additional 
 #### CNN Methods
 ```bash
 # Basic CNN training
-python CNN_pre.py
+python CNN.py
 
 # Improved CNN training
 python post_another_CNN.py
 ```
+
 
 #### Traditional Methods
 ```bash
@@ -313,9 +272,9 @@ python post_another_CNN.py
 
 ## 🧪 Testing & Evaluation
 
-### 15dB Noise Testing
+### *dB Noise Testing
 
-After training, the primary evaluation is performed on 15dB noise data to test model robustness:
+After training, the primary evaluation is performed on *dB noise data to test model robustness:
 
 ```bash
 # Test Swin Transformer on 15dB noise data
@@ -340,18 +299,6 @@ Each test generates comprehensive evaluation results:
 - **Performance metrics**: MAE, MSE, R², MARE
 - **Visualizations**: Error histograms, prediction vs. true plots
 - **Detailed reports**: JSON files with complete statistics
-
-### Performance Metrics
-
-All methods are evaluated using consistent metrics:
-
-| Metric | Description | Importance |
-|--------|-------------|------------|
-| **MAE** | Mean Absolute Error | Primary accuracy measure |
-| **MSE** | Mean Squared Error | Penalizes large errors |
-| **R²** | R-squared | Model fit quality |
-| **MARE** | Mean Absolute Relative Error | Relative accuracy |
-| **Latency** | Inference time | Real-time applicability |
 
 ---
 
@@ -381,26 +328,6 @@ python Swin_transformer_Fine_tuned.py
 # - Trains for 200 epochs with learning rate 1e-5
 # - Saves best model as Fine_tuned_swin_transformer_model.pth
 ```
-
-### Fine-tuning Parameters
-
-| Parameter | Value | Description |
-|-----------|-------|-------------|
-| `num_epochs_stage1` | 200 | Training epochs for fine-tuning |
-| `lr_stage1` | 1e-5 | Learning rate (lower than initial training) |
-| `batch_size` | 32 | Batch size for fine-tuning |
-| `checkpoint_path` | `saved_model/swin_best_model_*.pth` | Pre-trained model path |
-
-### Data Requirements
-
-Fine-tuning uses the same data structure as training:
-
-```
-datasets/
-├── data/
-│   ├── target1/          # GASF images (.jpg)
-│   └── label/            # Labels (.txt)
-```
 ### Fine-tuning Outputs
 
 During fine-tuning, the following files are generated:
@@ -428,6 +355,17 @@ python nine_point_ODES_AIC.py
 python nine_point_ADE_LM.py
 python nine_point_peak_method.py
 ```
+
+For testing four stainless steel samples using traditional methods, we need to adjust the parameters for the opposite side according to the following standards to achieve optimal results:
+
+1) **PEAK Method**:  
+   - `skip_time = 1200e-9` for samples of 3.983mm, 5.941mm, and 8.058mm;  
+   - `skip_time = 2500e-9` for the sample of 10.102mm.  
+
+2) **ODES-AIC Method**:  
+   - For 3.983mm and 5.941mm, use `window = 200`;  
+   - For 8.058mm, use `window = 936`;  
+   - For 10.102mm, use `window = 1250`.  
 
 #### Real Dataset Structure
 
@@ -463,13 +401,6 @@ This testing phase validates:
 - **Method robustness**: Consistency across different data sources
 - **Research reproducibility**: Validation against published results
 
-#### Generalization Results
-
-Winston data testing proves:
-- **Swin Transformer**: Maintains high performance on external data
-- **Superior generalization**: Outperforms traditional methods
-- **Research contribution**: Validates the method's broad applicability
-
 ## 🛠️ Other Methods
 
 ### CNN Methods
@@ -501,25 +432,6 @@ Winston data testing proves:
 - **Method**: Classical peak detection
 - **Purpose**: Simple baseline method
 - **Features**: Threshold-based detection, fast inference
-
-### Additional Models
-
-#### LSTM (`LSTM.py`)
-- **Architecture**: Long Short-Term Memory network
-- **Purpose**: Sequential modeling approach
-- **Features**: Time series processing, recurrent architecture
-
-#### BNN (`BNN_model.py`)
-- **Architecture**: Bayesian Neural Network
-- **Purpose**: Uncertainty quantification
-- **Features**: Probabilistic predictions, uncertainty estimation
-
-
----
-
-## !!!NOTICE!!!
-
-Note that the trained model was tested on our local machine with the following hardware configuration: 12th Gen Intel Core i9-12900H CPU (14 cores / 20 threads, 2.5 GHz base frequency), NVIDIA GeForce RTX 3060 GPU with 6 GB dedicated memory, Intel Iris Xe integrated GPU, and 16 GB RAM, running on Windows 11 with SSD storage. Due to differences in hardware architectures and floating-point computation implementations across different machines, minor numerical discrepancies may occur when the model is run on other systems. These differences, however, do not affect the overall performance or the validity of the results reported.
 
 ---
 
@@ -557,6 +469,9 @@ This project is released under the MIT License. Please observe:
    - No liability for outcomes from using the code
    - Use at your own risk
    - No warranty of accuracy or fitness
+
+6. **Configuration of Experimental Equipment**
+    Note that the trained model was tested on our local machine with the following hardware configuration: 12th Gen Intel Core i9-12900H CPU (14 cores / 20 threads, 2.5 GHz base frequency), NVIDIA GeForce RTX 3060 GPU with 6 GB dedicated memory, Intel Iris Xe integrated GPU, and 16 GB RAM, running on Windows 11 with SSD storage. Due to differences in hardware architectures and floating-point computation implementations across different machines, minor numerical discrepancies may occur when the model is run on other systems. These differences, however, do not affect the overall performance or the validity of the results reported.
 
 [View full license](LICENSE)
 
